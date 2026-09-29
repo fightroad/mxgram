@@ -215,7 +215,7 @@ void handleMessageReadReceipt(MTRequest *request, NSData *payload) {
 		 int32_t pts_count = 0;
 		 
 		 NSMutableData *data = [NSMutableData data];
-		 [data appendBytes:&header length:sizeof(header)];
+		 [data appendBytes:header length:sizeof(header)];
 		 [data appendBytes:&pts length:sizeof(pts)];
 		 [data appendBytes:&pts_count length:sizeof(pts_count)];
 	

@@ -21,10 +21,6 @@
 @interface _TtC18MultiScaleTextNode18MultiScaleTextNode : ASDisplayNode
 @end
 
-@interface _TtCC20StoryContainerScreen30StoryItemSetContainerComponent4View : UIView
-- (void)requestSave;
-@end
-
 @interface _TtC14PeerInfoScreen18PeerInfoHeaderNode : ASDisplayNode
 @property (nonatomic, strong) id peer;
 @end
@@ -1294,17 +1290,6 @@ static void updateMxEditBadge(ASDisplayNode *node, NSNumber *msgId, NSNumber *pe
         injectGhostExceptionButton(self, peerId);
     }
 
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:kHideStories]) {
-        NSString *className = NSStringFromClass([self class]);
-        if ([className containsString:@"StoryPeerList"] || 
-            [className containsString:@"StoryContainer"] ||
-            [className containsString:@"StorySetIndicator"] ||
-            [className containsString:@"AvatarStoryIndicator"]) {
-            self.view.hidden = YES;
-            self.view.alpha = 0.0;
-        }
-    }
-
     NSString *className = NSStringFromClass([self class]);
     if (![className containsString:@"ChatMessage"] || ![className containsString:@"ItemNode"]) {
         return;
@@ -1524,40 +1509,6 @@ static Class mxChatControllerClass(void) {
 %end
 %end // SiriBypassHooks
 
-// ============================================================
-// Download Stories: auto-save story to camera roll when opened.
-// Hooks StoryItemSetContainerComponent.View — calls requestSave
-// automatically when the story becomes visible.
-//
-// The class name carried a length of 32 for a 30-character class, so
-// objc_getClass returned nil and this never bound. Corrected against
-// release-12.9.2.
-//
-// Binding it is necessary but not sufficient: -requestSave is
-// `private func requestSave()` in StoryItemSetContainerComponent.swift with no
-// @objc, so it has no selector and the call below still cannot land. Saving a
-// story needs a different route — the Save entry in the story's own context
-// menu, or saveToCameraRoll reached some other way. Left wired up so that route
-// only has to be filled in here.
-// ============================================================
-%hook _TtCC20StoryContainerScreen30StoryItemSetContainerComponent4View
-
-- (void)didMoveToWindow {
-    %orig;
-    if (![[NSUserDefaults standardUserDefaults] boolForKey:kDownloadStories]) return;
-    if (!self.window) return;
-    // Delay slightly so the story is fully loaded before saving
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.8 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        @try {
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:kDownloadStories]) {
-                [self requestSave];
-            }
-        } @catch (NSException *e) {}
-    });
-}
-
-%end
-
 __attribute__((constructor))
 static void hook() {
     NSLog(@"[Mx] Tweak initializing...");
@@ -1589,8 +1540,6 @@ static void hook() {
         kAntiRevoke: @NO,
         kAntiEdit: @NO,
         kAntiSelfDestruct: @NO,
-        kHideStories: @NO,
-        kDownloadStories: @NO,
         kDisableMessageReadReceipt: @NO,
         kDisableStoriesReadReceipt: @NO,
         kDisableOnlineStatus: @NO,

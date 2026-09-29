@@ -85,8 +85,6 @@
 #define kAntiSelfDestruct @"MxAntiSelfDestruct"
 #define kAntiAutoDelete @"MxAntiAutoDelete"
 #define kConfirmCalls @"MxConfirmCalls"
-#define kHideStories @"MxHideStories"
-#define kDownloadStories @"MxDownloadStories"
 
 #define FAKE_LOCATION_ENABLED_KEY @"MxFakeLocation"
 #define FAKE_LATITUDE_KEY @"MxSavedLatitude"
@@ -97,9 +95,6 @@
 
 // Download speed boost: 0 = off, 1 = medium (512KB/8 parts), 2 = maximum (1MB/12 parts)
 #define kDownloadSpeedBoost @"MxDownloadSpeedBoost"
-
-// Send audio/video files as voice messages
-#define kSendAsVoice @"MxSendAsVoice"
 
 // Video to Voice: strip the video track off a picked video and send only its
 // audio. Honours the trim handles set in the preview.

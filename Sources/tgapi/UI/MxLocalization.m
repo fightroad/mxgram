@@ -282,8 +282,6 @@ static NSString *MxLanguageMatchingDevice(void) {
       /* Calls & Voice */
       @"CONFIRM_CALLS_TITLE" : @"Confirm Calls",
       @"CONFIRM_CALLS_SUBTITLE" : @"Show a confirmation dialog before answering incoming calls.",
-      @"SEND_AS_VOICE_TITLE" : @"Send Audio as Voice Message",
-      @"SEND_AS_VOICE_SUBTITLE" : @"Audio files you send will appear as voice bubbles instead of file attachments.",
       @"EDIT_HISTORY_TITLE" : @"Edit History",
       @"EDIT_HISTORY_ORIGINAL" : @"Original:",
       @"EDIT_HISTORY_EDIT" : @"Edit",
@@ -309,10 +307,6 @@ static NSString *MxLanguageMatchingDevice(void) {
       @"CUSTOM_STARS_ACTIVE" : @"Showing %lld Stars",
       @"CUSTOM_STARS_PROMPT" : @"How many Stars should be displayed?",
       @"CUSTOM_STARS_RESET" : @"Show the real balance",
-      @"DOWNLOAD_STORIES_TITLE" : @"Auto-Save Stories",
-      @"DOWNLOAD_STORIES_SUBTITLE" : @"Automatically save stories to your camera roll when you open them.",
-      @"HIDE_STORIES_TITLE" : @"Hide Stories Bar",
-      @"HIDE_STORIES_SUBTITLE" : @"Remove the stories row from the top of your chats list.",
       /* File Picker */
       @"FIX_FILE_PICKER_TITLE" : @"Fix File Picker",
       @"FIX_FILE_PICKER_SUBTITLE" :
