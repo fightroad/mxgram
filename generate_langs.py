@@ -41,9 +41,18 @@ for lproj in lprojs:
             if "=" in line:
                 key, val = line.split("=", 1)
                 key = key.strip().strip('"')
-                val = val.strip().strip('";')
-                # Escape quotes
-                val = val.replace('"', '\\"')
+                # Drop trailing ';', then surrounding quotes — do not use
+                # strip('"') on the whole value (would eat escaped quotes).
+                val = val.strip()
+                if val.endswith(";"):
+                    val = val[:-1].rstrip()
+                if len(val) >= 2 and val[0] == '"' and val[-1] == '"':
+                    val = val[1:-1]
+                # .strings may already contain \" and \\ — decode to raw text,
+                # then re-escape for an ObjC @"..." literal. The old
+                # replace('"', '\\"') doubled existing backslashes and broke CI.
+                val = val.replace("\\\\", "\\").replace('\\"', '"')
+                val = val.replace("\\", "\\\\").replace('"', '\\"')
                 out += f'            @"{key}": @"{val}",\n'
 
     out += f'        }};\n'
