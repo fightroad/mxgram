@@ -5,7 +5,12 @@
 "FILE_FIXER_SECTION_HEADER" = "文件选择器修复";
 "FAKE_LOCATION_SECTION_HEADER" = "虚拟位置";
 "LANGUAGE_SECTION_HEADER" = "语言";
-"CREDITS_SECTION_HEADER" = "致谢";
+"GHOST_MODE_MAIN_TITLE" = "隐身模式";
+"GHOST_MODE_MAIN_SUBTITLE" = "所有隐身功能的总开关";
+"ADVANCED_SETTINGS_TITLE" = "高级设置";
+"ADVANCED_SETTINGS_SHOW" = "显示详细设置";
+"ADVANCED_SETTINGS_HIDE" = "隐藏详细设置";
+"CHANGE_LANGUAGE_TITLE" = "更改语言";
 
 /* Ghost Mode */
 "DISABLE_ONLINE_STATUS_TITLE" = "隐藏在线状态";
@@ -108,10 +113,6 @@
 "OK" = "确定";
 "CANCEL" = "取消";
 
-"AUTHOR_MESSAGE" = "此 Telegram 插件仅供个人和教育用途。我们与 Telegram 没有任何关联。所有商标，包括 Telegram 的名称和标志，均归其各自所有者所有。请不要用它来违反规则、做灰色操作或违反 Telegram 的服务条款——如果出问题，我们概不负责。使用风险自负。\n\n另外……如果你喜欢这个插件，记得说一声。我真的很需要认可来维持动力。\n\n还有……如果你愿意支持我，捐个一两美元的话，可以在 Telegram 上联系我。";
-
-
-
 "ANTI_EDIT_TITLE" = "保存被编辑消息的原文";
 "ANTI_EDIT_SUBTITLE" = "保留他人编辑过的每一个版本。聊天中仍显示最新内容；点击气泡上的铅笔即可查看之前写了什么。";
 "ANTI_EDIT_UNAVAILABLE_SUBTITLE" = "此 Telegram 版本不可用 —— 在 API 层更新之前无法读取编辑更新。";
@@ -124,7 +125,6 @@
 "CUSTOM_STARS_PROMPT" = "要显示多少星星？";
 "CUSTOM_STARS_RESET" = "显示真实余额";
 "DISABLE_UPLOADING_ROUND_VIDEO_STATUS_SUBTITLE" = "上传圆形视频消息时隐藏提示。";
-"DISCLAIMER" = "免责声明";
 "DOWNLOAD_BOOST_SECTION_HEADER" = "下载速度";
 "DOWNLOAD_BOOST_TITLE" = "下载加速";
 "DOWNLOAD_BOOST_SUBTITLE" = "增大分块体积和并行连接数，加快文件下载。多数人用「中等」即可。";

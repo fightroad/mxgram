@@ -169,7 +169,12 @@ static NSString *MxLanguageMatchingDevice(void) {
       @"FILE_FIXER_SECTION_HEADER" : @"File Picker Fix",
       @"FAKE_LOCATION_SECTION_HEADER" : @"Fake Location",
       @"LANGUAGE_SECTION_HEADER" : @"Language",
-      @"CREDITS_SECTION_HEADER" : @"Credits",
+      @"GHOST_MODE_MAIN_TITLE" : @"Ghost Mode",
+      @"GHOST_MODE_MAIN_SUBTITLE" : @"Main toggle for all ghost features",
+      @"ADVANCED_SETTINGS_TITLE" : @"Advanced Settings",
+      @"ADVANCED_SETTINGS_SHOW" : @"Show detail settings",
+      @"ADVANCED_SETTINGS_HIDE" : @"Hide detail settings",
+      @"CHANGE_LANGUAGE_TITLE" : @"Change Language",
       /* Ghost Mode */
       @"DISABLE_ONLINE_STATUS_TITLE" : @"Hide Online Status",
       @"DISABLE_ONLINE_STATUS_SUBTITLE" :
@@ -370,16 +375,6 @@ static NSString *MxLanguageMatchingDevice(void) {
       @"WELCOME_HOWTO_TURRIT" :
           @"Open Settings and long-press the \"About Turrit\" row.",
       @"WELCOME_JOIN_CHANNEL" : @"Join Channel →",
-      @"DISCLAIMER" : @"Disclaimer",
-      @"AUTHOR_MESSAGE" :
-          @"This Telegram tweak is for personal and educational use only. We "
-          @"are not affiliated with Telegram in any way. All trademarks, "
-          @"including the Telegram name and logo, belong to their respective "
-          @"owners. Don't use this to break rules or violate Telegram's terms "
-          @"— we're not responsible if things go sideways. Use at your own "
-          @"risk.\n\nAlso… if you like it, say something. I seriously live off "
-          @"validation.\n\nIf you want to support the project, feel free to "
-          @"reach out on Telegram.",
     };
   });
 

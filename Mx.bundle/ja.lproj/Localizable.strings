@@ -5,7 +5,12 @@
 "FILE_FIXER_SECTION_HEADER" = "ファイル選択の修正";
 "FAKE_LOCATION_SECTION_HEADER" = "位置情報の偽装";
 "LANGUAGE_SECTION_HEADER" = "言語";
-"CREDITS_SECTION_HEADER" = "クレジット";
+"GHOST_MODE_MAIN_TITLE" = "ゴーストモード";
+"GHOST_MODE_MAIN_SUBTITLE" = "すべてのゴースト機能のメインスイッチ";
+"ADVANCED_SETTINGS_TITLE" = "詳細設定";
+"ADVANCED_SETTINGS_SHOW" = "詳細設定を表示";
+"ADVANCED_SETTINGS_HIDE" = "詳細設定を隠す";
+"CHANGE_LANGUAGE_TITLE" = "言語を変更";
 
 /* Ghost Mode */
 "DISABLE_ONLINE_STATUS_TITLE" = "オンライン表示を無効化";
@@ -108,9 +113,6 @@
 "OK" = "OK";
 "CANCEL" = "キャンセル";
 
-"DISCLAIMER" = "免責事項";
-
-"AUTHOR_MESSAGE" = "このTweakは個人的かつ教育目的のみで提供されており、Telegram とは一切関係がありません。Telegram の名称やロゴなどの商標はそれぞれの所有者に帰属します。違反行為や規約違反に使わないでください。何か問題が発生しても開発者は責任を負いません。すべて自己責任でご使用ください。\n \nそれと、もし気に入ったら何か感想をください。正直、評価が励みになります。\n \nまた、1～2ドル寄付してサポートしたい場合は、Telegramで連絡してください。";
 "ANTI_EDIT_TITLE" = "編集されたメッセージの原文を保存";
 "ANTI_EDIT_SUBTITLE" = "相手が編集したメッセージのすべてのバージョンを保存します。チャットには最新の内容が表示されたままです。吹き出しの鉛筆をタップすると、以前の内容を読めます。";
 "ANTI_EDIT_UNAVAILABLE_SUBTITLE" = "この Telegram のバージョンでは利用できません — API レイヤーが更新されるまで編集の更新を読み取れません。";

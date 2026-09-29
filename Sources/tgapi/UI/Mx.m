@@ -19,12 +19,11 @@ typedef NS_ENUM(NSInteger, TABLE_VIEW_SECTIONS) {
   FILE_FIXER = 3,
   FAKE_LOCATION = 4,
   LANGUAGE = 5,
-  CREDITS = 6,
 };
 
 // Shown in the settings footer and compared against an announcement's
 // target_version. The URLs it is checked against live in Constants.h.
-static NSString *const kMxTweakVersion = @"1.0.0";
+static NSString *const kMxTweakVersion = @"1.1.0";
 
 @interface Mx ()
 @property(nonatomic, strong) UITableView *tableView;
@@ -560,7 +559,7 @@ static NSString *const kMxTweakVersion = @"1.0.0";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 7;
+  return 6;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
@@ -580,8 +579,6 @@ static NSString *const kMxTweakVersion = @"1.0.0";
     return 2;
   case LANGUAGE:
     return 1;
-  case CREDITS:
-    return 2;
   default:
     return 0;
   }
@@ -604,8 +601,6 @@ static NSString *const kMxTweakVersion = @"1.0.0";
     return TGLoc(@"FAKE_LOCATION_SECTION_HEADER");
   case LANGUAGE:
     return TGLoc(@"LANGUAGE_SECTION_HEADER");
-  case CREDITS:
-    return TGLoc(@"CREDITS_SECTION_HEADER");
   default:
     return nil;
   }
@@ -653,8 +648,10 @@ static NSString *const kMxTweakVersion = @"1.0.0";
   if (indexPath.section == GHOST_MODE) {
     if (indexPath.row == 1) {
       cell = [self normalCellFromTableView:tableView];
-      cell.textLabel.text = @"Advanced Settings";
-      cell.detailTextLabel.text = self.isGhostModeExpanded ? @"Hide detail settings" : @"Show detail settings";
+      cell.textLabel.text = TGLoc(@"ADVANCED_SETTINGS_TITLE");
+      cell.detailTextLabel.text =
+          self.isGhostModeExpanded ? TGLoc(@"ADVANCED_SETTINGS_HIDE")
+                                   : TGLoc(@"ADVANCED_SETTINGS_SHOW");
       cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
       cell.accessoryView = nil;
       cell.imageView.image = [UIImage systemImageNamed:@"slider.horizontal.3"];
@@ -666,8 +663,8 @@ static NSString *const kMxTweakVersion = @"1.0.0";
     cell.imageView.image = nil;
 
     if (indexPath.row == 0) {
-      cell.textLabel.text = @"Ghost Mode";
-      cell.detailTextLabel.text = @"Main toggle for all ghost features";
+      cell.textLabel.text = TGLoc(@"GHOST_MODE_MAIN_TITLE");
+      cell.detailTextLabel.text = TGLoc(@"GHOST_MODE_MAIN_SUBTITLE");
       cell.imageView.image = [UIImage systemImageNamed:@"eye.slash.fill"];
       cell.imageView.tintColor = [self dynamicColorBW];
     } else {
@@ -1013,36 +1010,11 @@ static NSString *const kMxTweakVersion = @"1.0.0";
     return cell;
   } else if (indexPath.section == LANGUAGE) {
     cell = [self normalCellFromTableView:tableView];
-    cell.textLabel.text = @"Change Language";
+    cell.textLabel.text = TGLoc(@"CHANGE_LANGUAGE_TITLE");
     cell.detailTextLabel.text = @"";
     cell.imageView.image = [UIImage systemImageNamed:@"globe"];
     cell.imageView.tintColor = [self dynamicColorBW];
     cell.accessoryView = nil;
-    cell.textLabel.numberOfLines = 0;
-    cell.detailTextLabel.numberOfLines = 0;
-    return cell;
-  } else if (indexPath.section == CREDITS) {
-    cell = [self normalCellFromTableView:tableView];
-    if (indexPath.row == 0) {
-      cell.textLabel.text = @"Mx Team / m1ronx";
-      cell.detailTextLabel.text = @"Developer";
-      cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-      NSData *imageData = [[NSData alloc] initWithBase64EncodedString:MXLOGOPNG options:NSDataBase64DecodingIgnoreUnknownCharacters];
-      UIImage *rawImage = [UIImage imageWithData:imageData];
-      UIGraphicsImageRenderer *renderer = [[UIGraphicsImageRenderer alloc] initWithSize:CGSizeMake(40, 40)];
-      UIImage *thumb = [renderer imageWithActions:^(UIGraphicsImageRendererContext *ctx) { [rawImage drawInRect:CGRectMake(0, 0, 40, 40)]; }];
-      cell.imageView.image = thumb;
-      cell.imageView.layer.cornerRadius = 8;
-      cell.imageView.layer.masksToBounds = YES;
-      cell.accessoryView = nil;
-    } else if (indexPath.row == 1) {
-      cell.textLabel.text = TGLoc(@"DISCLAIMER");
-      cell.detailTextLabel.text = @"A note from developer";
-      cell.imageView.image = [UIImage systemImageNamed:@"note.text"];
-      cell.imageView.tintColor = [self dynamicColorBW];
-      cell.accessoryView = nil;
-      cell.detailTextLabel.textColor = [UIColor lightGrayColor];
-    }
     cell.textLabel.numberOfLines = 0;
     cell.detailTextLabel.numberOfLines = 0;
     return cell;
@@ -1100,19 +1072,6 @@ static NSString *const kMxTweakVersion = @"1.0.0";
   if (indexPath.section == LANGUAGE) { // Language
     if (indexPath.row == 0) {
       [self showLanguageSelector];
-    }
-  }
-
-  if (indexPath.section == CREDITS) {
-    if (indexPath.row == 0) {
-      NSURL *url = [NSURL URLWithString:kMxChannelURL];
-      if ([[UIApplication sharedApplication] canOpenURL:url]) {
-        [[UIApplication sharedApplication] openURL:url
-                                           options:@{}
-                                 completionHandler:nil];
-      }
-    } else if (indexPath.row == 1) {
-      [self showDisclaimer];
     }
   }
 }
@@ -1516,23 +1475,6 @@ static NSString *const kMxTweakVersion = @"1.0.0";
 
   [self presentViewController:alert animated:YES completion:nil];
 }
-
-- (void)showDisclaimer {
-  UIAlertController *alert =
-      [UIAlertController alertControllerWithTitle:TGLoc(@"DISCLAIMER")
-                                          message:TGLoc(@"AUTHOR_MESSAGE")
-                                   preferredStyle:UIAlertControllerStyleAlert];
-
-  UIAlertAction *okAction =
-      [UIAlertAction actionWithTitle:TGLoc(@"OK")
-                               style:UIAlertActionStyleDefault
-                             handler:nil];
-
-  [alert addAction:okAction];
-
-  [self presentViewController:alert animated:YES completion:nil];
-}
-
 
 - (void)showLanguageSelector {
   LanguageSelector *ui = [LanguageSelector new];

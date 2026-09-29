@@ -15,7 +15,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.0.0-blue" alt="version">
+  <img src="https://img.shields.io/badge/version-1.1.0-blue" alt="version">
   <img src="https://img.shields.io/badge/iOS-14.0%2B-lightgrey" alt="ios">
   <img src="https://img.shields.io/badge/arch-arm64%20%7C%20arm64e-informational" alt="arch">
   <img src="https://img.shields.io/badge/语言-10-success" alt="languages">

@@ -5,7 +5,12 @@
 "FILE_FIXER_SECTION_HEADER" = "Correcteur de Sélecteur de Fichiers";
 "FAKE_LOCATION_SECTION_HEADER" = "Fausse Localisation";
 "LANGUAGE_SECTION_HEADER" = "Langue";
-"CREDITS_SECTION_HEADER" = "Crédits";
+"GHOST_MODE_MAIN_TITLE" = "Mode Fantôme";
+"GHOST_MODE_MAIN_SUBTITLE" = "Interrupteur principal de toutes les fonctions fantôme";
+"ADVANCED_SETTINGS_TITLE" = "Paramètres avancés";
+"ADVANCED_SETTINGS_SHOW" = "Afficher les paramètres détaillés";
+"ADVANCED_SETTINGS_HIDE" = "Masquer les paramètres détaillés";
+"CHANGE_LANGUAGE_TITLE" = "Changer de langue";
 
 /* Ghost Mode */
 
@@ -109,7 +114,6 @@
 "OK" = "OK";
 "CANCEL" = "Annuler";
 
-"AUTHOR_MESSAGE" = "Ce tweak Telegram est uniquement destiné à un usage personnel et éducatif. Nous ne sommes en aucun cas affiliés à Telegram. Toutes les marques, y compris le nom et le logo de Telegram, appartiennent à leurs propriétaires respectifs. N'utilisez pas ceci pour enfreindre les règles, faire des choses louches ou violer les conditions d'utilisation de Telegram — nous ne sommes pas responsables en cas de problème. Utilisez-le à vos risques et périls.\n\nAussi… si ça vous plaît, dites-le. Sérieusement, je vis pour la validation.\n\nEt… si vous voulez me soutenir avec un ou deux euros, contactez-moi sur Telegram.";
 "ANTI_EDIT_TITLE" = "Conserver l'original des messages modifiés";
 "ANTI_EDIT_SUBTITLE" = "Conserve chaque version d'un message modifié par quelqu'un. La discussion affiche toujours le texte le plus récent ; touchez le crayon sur la bulle pour lire ce qui était écrit avant.";
 "ANTI_EDIT_UNAVAILABLE_SUBTITLE" = "Indisponible sur cette version de Telegram — les mises à jour de modification ne peuvent pas être lues tant que la couche API n'est pas actualisée.";
@@ -122,7 +126,6 @@
 "CUSTOM_STARS_PROMPT" = "Combien d'étoiles afficher ?";
 "CUSTOM_STARS_RESET" = "Afficher le vrai solde";
 "DISABLE_UPLOADING_ROUND_VIDEO_STATUS_SUBTITLE" = "Masque l'indicateur pendant l'envoi d'un message vidéo rond.";
-"DISCLAIMER" = "Avertissement";
 "DOWNLOAD_BOOST_SECTION_HEADER" = "Vitesse de téléchargement";
 "DOWNLOAD_BOOST_TITLE" = "Accélérer les téléchargements";
 "DOWNLOAD_BOOST_SUBTITLE" = "Augmente la taille des blocs et le nombre de connexions parallèles pour télécharger plus vite. « Moyen » convient à la plupart des utilisateurs.";

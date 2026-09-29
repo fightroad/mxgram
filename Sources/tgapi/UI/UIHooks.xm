@@ -665,17 +665,13 @@ static BOOL injectBadgeToNode(ASDisplayNode *textNode, ASDisplayNode *headerNode
         if (peerId == 0) return NO;
 
         NSString *prefix = nil;
-        UIColor *badgeColor = [UIColor colorWithRed:0.0 green:0.5 blue:1.0 alpha:1.0]; // Mx Blue
+        UIColor *badgeColor =
+            [UIColor colorWithRed:1.0 green:0.75 blue:0.0 alpha:1.0]; // Gold
 
-        // Add your IDs here
-        if (peerId == 5576711589 || peerId == 7846965839) {
+        NSNumber *currId = [NSClassFromString(@"TLParser")
+            performSelector:@selector(getCurrentUserId)];
+        if (currId && [currId longLongValue] == peerId) {
             prefix = @"👑 Mx Owner";
-            badgeColor = [UIColor colorWithRed:1.0 green:0.75 blue:0.0 alpha:1.0]; // Gold
-        } else {
-            NSNumber *currId = [NSClassFromString(@"TLParser") performSelector:@selector(getCurrentUserId)];
-            if (currId && [currId longLongValue] == peerId) {
-                prefix = @"✨ Mx User";
-            }
         }
         
         if (!prefix) {

@@ -5,7 +5,12 @@
 "FILE_FIXER_SECTION_HEADER" = "Sửa lỗi chọn tệp";
 "FAKE_LOCATION_SECTION_HEADER" = "Vị trí giả";
 "LANGUAGE_SECTION_HEADER" = "Ngôn ngữ";
-"CREDITS_SECTION_HEADER" = "Ghi công";
+"GHOST_MODE_MAIN_TITLE" = "Chế độ ma";
+"GHOST_MODE_MAIN_SUBTITLE" = "Công tắc chính cho mọi tính năng ẩn mình";
+"ADVANCED_SETTINGS_TITLE" = "Cài đặt nâng cao";
+"ADVANCED_SETTINGS_SHOW" = "Hiện cài đặt chi tiết";
+"ADVANCED_SETTINGS_HIDE" = "Ẩn cài đặt chi tiết";
+"CHANGE_LANGUAGE_TITLE" = "Đổi ngôn ngữ";
 
 /* Ghost Mode */
 "DISABLE_ONLINE_STATUS_TITLE" = "Tắt trạng thái online";
@@ -108,9 +113,6 @@
 "OK" = "Đồng ý";
 "CANCEL" = "Hủy";
 
-"DISCLAIMER" = "Tuyên bố miễn trừ";
-
-"AUTHOR_MESSAGE" = "Bản chỉnh sửa Telegram này chỉ dành cho mục đích cá nhân và giáo dục. Chúng tôi không liên kết với Telegram. Mọi nhãn hiệu, bao gồm tên và logo Telegram, thuộc về chủ sở hữu tương ứng. Không sử dụng để vi phạm quy tắc, hành vi mờ ám hoặc điều khoản Telegram - chúng tôi không chịu trách nhiệm nếu có vấn đề phát sinh. Tự chịu rủi ro khi sử dụng. \n \nNếu bạn thích, hãy nói gì đó. Tôi thực sự sống nhờ sự công nhận. \n \nNếu muốn hỗ trợ tôi bằng cách quyên góp, hãy liên hệ với tôi trên Telegram";
 "ANTI_EDIT_TITLE" = "Lưu tin nhắn gốc đã bị sửa";
 "ANTI_EDIT_SUBTITLE" = "Giữ lại mọi phiên bản của tin nhắn bị người khác sửa. Khung chat vẫn hiện nội dung mới nhất; chạm vào bút chì trên bong bóng để đọc nội dung trước đó.";
 "ANTI_EDIT_UNAVAILABLE_SUBTITLE" = "Không dùng được trên phiên bản Telegram này — không đọc được cập nhật sửa tin cho tới khi lớp API được làm mới.";
