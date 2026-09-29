@@ -113,8 +113,6 @@
 #define kCustomStarsEnabled @"MxCustomStarsEnabled"
 #define kCustomStarsValue @"MxCustomStarsValue"
 
-// The two addresses this tweak reaches out to. Kept here so both the settings
-// screen and the first-run welcome alert open the same channel.
-#define kMxChannelURL @"https://t.me/m1ronx"
+// Announcements JSON polled by the settings header.
 #define kMxAnnouncementsURL                                                    \
   @"https://raw.githubusercontent.com/m1ronx/mx/main/announcements.json"

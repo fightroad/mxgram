@@ -605,25 +605,13 @@ static void showWelcomeAlertIfNeeded() {
         [defaults synchronize];
     };
 
-    UIAlertAction *channelAction = [UIAlertAction
-        actionWithTitle:MxLoc(@"WELCOME_JOIN_CHANNEL")
+    UIAlertAction *okAction = [UIAlertAction
+        actionWithTitle:MxLoc(@"OK")
                   style:UIAlertActionStyleDefault
                 handler:^(UIAlertAction *action) {
         markShown();
-        NSURL *url = [NSURL URLWithString:kMxChannelURL];
-        if ([[UIApplication sharedApplication] canOpenURL:url]) {
-            [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
-        }
     }];
 
-    UIAlertAction *okAction = [UIAlertAction
-        actionWithTitle:MxLoc(@"OK")
-                  style:UIAlertActionStyleCancel
-                handler:^(UIAlertAction *action) {
-        markShown();
-    }];
-
-    [alert addAction:channelAction];
     [alert addAction:okAction];
 
     [rootVC presentViewController:alert animated:YES completion:nil];

@@ -161,4 +161,3 @@
 "WELCOME_HOWTO" = "打开设置，长按“%@”一行。";
 "WELCOME_HOWTO_IME" = "打开设置，长按“%@”一行。\n\n在 iMe 中“%@”一行无效 —— iMe 会在该行打开自己的菜单。";
 "WELCOME_HOWTO_TURRIT" = "打开设置，长按“About Turrit”一行。";
-"WELCOME_JOIN_CHANNEL" = "加入频道 →";

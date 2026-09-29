@@ -374,7 +374,6 @@ static NSString *MxLanguageMatchingDevice(void) {
           @"row will not work — iMe opens its own menu on it.",
       @"WELCOME_HOWTO_TURRIT" :
           @"Open Settings and long-press the \"About Turrit\" row.",
-      @"WELCOME_JOIN_CHANNEL" : @"Join Channel →",
     };
   });
 
