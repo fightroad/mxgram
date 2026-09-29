@@ -19,6 +19,44 @@ output_path = args.output
 if not os.path.isdir(bundle_path):
     raise SystemExit(f"Không tìm thấy bundle: {bundle_path}")
 
+
+def decode_strings_escapes(s: str) -> str:
+    """Decode .strings escapes (\\n \\r \\t \\\" \\\\) into raw text."""
+    out = []
+    i = 0
+    while i < len(s):
+        if s[i] == "\\" and i + 1 < len(s):
+            n = s[i + 1]
+            if n == "n":
+                out.append("\n")
+            elif n == "r":
+                out.append("\r")
+            elif n == "t":
+                out.append("\t")
+            elif n == '"':
+                out.append('"')
+            elif n == "\\":
+                out.append("\\")
+            else:
+                out.append(n)
+            i += 2
+        else:
+            out.append(s[i])
+            i += 1
+    return "".join(out)
+
+
+def encode_objc_string(s: str) -> str:
+    """Escape raw text for an ObjC @\"...\" literal."""
+    return (
+        s.replace("\\", "\\\\")
+        .replace('"', '\\"')
+        .replace("\n", "\\n")
+        .replace("\r", "\\r")
+        .replace("\t", "\\t")
+    )
+
+
 # Sắp xếp để output ổn định giữa các lần chạy / các máy
 lprojs = sorted(d for d in os.listdir(bundle_path) if d.endswith(".lproj"))
 
@@ -29,39 +67,38 @@ out += "static inline NSDictionary *GetAllTranslations(NSString *code) {\n"
 for lproj in lprojs:
     code = lproj.replace(".lproj", "")
     strings_path = os.path.join(bundle_path, lproj, "Localizable.strings")
-    if not os.path.exists(strings_path): continue
+    if not os.path.exists(strings_path):
+        continue
 
     out += f'    if ([code isEqualToString:@"{code}"]) {{\n'
-    out += f'        return @{{\n'
+    out += f"        return @{{\n"
 
-    with open(strings_path, 'r', encoding='utf-8') as f:
+    with open(strings_path, "r", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
-            if not line or line.startswith("/*") or line.startswith("//"): continue
-            if "=" in line:
-                key, val = line.split("=", 1)
-                key = key.strip().strip('"')
-                # Drop trailing ';', then surrounding quotes — do not use
-                # strip('"') on the whole value (would eat escaped quotes).
-                val = val.strip()
-                if val.endswith(";"):
-                    val = val[:-1].rstrip()
-                if len(val) >= 2 and val[0] == '"' and val[-1] == '"':
-                    val = val[1:-1]
-                # .strings may already contain \" and \\ — decode to raw text,
-                # then re-escape for an ObjC @"..." literal. The old
-                # replace('"', '\\"') doubled existing backslashes and broke CI.
-                val = val.replace("\\\\", "\\").replace('\\"', '"')
-                val = val.replace("\\", "\\\\").replace('"', '\\"')
-                out += f'            @"{key}": @"{val}",\n'
+            if not line or line.startswith("/*") or line.startswith("//"):
+                continue
+            if "=" not in line:
+                continue
+            key, val = line.split("=", 1)
+            key = key.strip().strip('"')
+            # Drop trailing ';', then surrounding quotes — do not use
+            # strip('"') on the whole value (would eat escaped quotes).
+            val = val.strip()
+            if val.endswith(";"):
+                val = val[:-1].rstrip()
+            if len(val) >= 2 and val[0] == '"' and val[-1] == '"':
+                val = val[1:-1]
+            val = encode_objc_string(decode_strings_escapes(val))
+            out += f'            @"{key}": @"{val}",\n'
 
-    out += f'        }};\n'
-    out += f'    }}\n'
+    out += "        };\n"
+    out += "    }\n"
 
 out += "    return nil;\n}\n"
 
 os.makedirs(os.path.dirname(output_path), exist_ok=True)
-with open(output_path, "w", encoding='utf-8') as f:
+with open(output_path, "w", encoding="utf-8") as f:
     f.write(out)
 
 print(f"Đã ghi {output_path} ({len(lprojs)} ngôn ngữ)")
