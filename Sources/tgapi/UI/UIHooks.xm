@@ -1235,27 +1235,19 @@ static void updateMxEditBadge(ASDisplayNode *node, NSNumber *msgId, NSNumber *pe
 - (void)layout {
     %orig;
 
+    // Safety net only — real ad blocking is the fake empty responses in
+    // FunctionHandler.m. This catches UI left over from a pre-toggle cache.
+    // Do not try KVC on Message.adAttribute: Message is pure Swift with no
+    // @objc, so that path never fires (see comment near the old Postbox hook).
     if ([[NSUserDefaults standardUserDefaults] boolForKey:kDisableAllAds]) {
         @try {
             NSString *className = NSStringFromClass([self class]);
-            if ([className containsString:@"ChatSponsoredMessage"] || [className containsString:@"ChatChannelAdItemNode"]) {
+            if ([className containsString:@"Sponsored"] ||
+                [className containsString:@"ChatChannelAd"]) {
                 self.view.hidden = YES;
                 self.view.alpha = 0.0;
+                self.view.userInteractionEnabled = NO;
                 return;
-            }
-
-            if ([self respondsToSelector:NSSelectorFromString(@"item")]) {
-                id item = [self valueForKey:@"item"];
-                if (item && [item respondsToSelector:NSSelectorFromString(@"message")]) {
-                    id message = [item valueForKey:@"message"];
-                    if (message && [message respondsToSelector:NSSelectorFromString(@"adAttribute")]) {
-                        if ([message valueForKey:@"adAttribute"] != nil) {
-                            self.view.hidden = YES;
-                            self.view.alpha = 0.0;
-                            return;
-                        }
-                    }
-                }
             }
         } @catch (NSException *e) {}
     }

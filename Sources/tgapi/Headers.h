@@ -62,6 +62,8 @@ void handleSetTyping(MTRequest *request, NSData *payload);
 void handleMessageReadReceipt(MTRequest *request, NSData *payload);
 void handleStoriesReadReceipt(MTRequest *request, NSData *payload);
 void handleGetSponsoredMessages(MTRequest *request, NSData *payload);
+void handleGetSponsoredPeers(MTRequest *request, NSData *payload);
+void handleGetPromoData(MTRequest *request, NSData *payload);
 void handleChannelsReadReceipt(MTRequest *request, NSData *payload);
 void handleSendScreenshotNotification(MTRequest *request, NSData *payload);
 void handleReadMessageContents(MTRequest *request, NSData *payload);

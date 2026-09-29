@@ -89,7 +89,14 @@ static BOOL mxNeedsResponsePatching(void) {
     handleStoriesReadReceipt(self, payload);
     break;
   case kGetSponsoredMessages:
+  case kGetSponsoredMessagesLegacy:
     handleGetSponsoredMessages(self, payload);
+    break;
+  case kGetSponsoredPeers:
+    handleGetSponsoredPeers(self, payload);
+    break;
+  case kGetPromoData:
+    handleGetPromoData(self, payload);
     break;
   case kChannelsReadHistory:
     handleChannelsReadReceipt(self, payload);

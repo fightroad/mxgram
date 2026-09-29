@@ -236,9 +236,30 @@ void handleStoriesReadReceipt(MTRequest *request, NSData *payload) {
 
 void handleGetSponsoredMessages(MTRequest *request, NSData *payload) {
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kDisableAllAds]) {
-		
-		uint8_t header[] = {0x0F, 0X49, 0X39, 0X18}; // messages.sponsoredMessagesEmpty#1839490f
+		// messages.sponsoredMessagesEmpty#1839490f — still the empty variant
+		uint8_t header[] = {0x0F, 0x49, 0x39, 0x18};
 		request.fakeData = [NSData dataWithBytes:header length:sizeof(header)];
+	}
+}
+
+void handleGetSponsoredPeers(MTRequest *request, NSData *payload) {
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:kDisableAllAds]) {
+		// contacts.sponsoredPeersEmpty#ea32b4b1
+		uint8_t header[] = {0xB1, 0xB4, 0x32, 0xEA};
+		request.fakeData = [NSData dataWithBytes:header length:sizeof(header)];
+	}
+}
+
+void handleGetPromoData(MTRequest *request, NSData *payload) {
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:kDisableAllAds]) {
+		// help.promoDataEmpty#98f6ac75 expires:int
+		// Far-enough expires keeps the client from re-fetching every few minutes.
+		NSMutableData *data = [NSMutableData dataWithCapacity:8];
+		int32_t constructor = -1728664459;
+		int32_t expires = (int32_t)([[NSDate date] timeIntervalSince1970] + 6 * 3600);
+		[data appendBytes:&constructor length:sizeof(constructor)];
+		[data appendBytes:&expires length:sizeof(expires)];
+		request.fakeData = data;
 	}
 }
 

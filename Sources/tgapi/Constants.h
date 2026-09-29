@@ -5,7 +5,14 @@
 #define kMessagesSetTypingAction 1486110434
 #define kMessagesReadHistory 238054714
 #define kStoriesReadStories -1521034552
-#define kGetSponsoredMessages -1680673735
+// messages.getSponsoredMessages — TL constructor changed when flags/msg_id
+// were added. Match both so older clients keep working.
+#define kGetSponsoredMessages 1030547536          // #3d6ce850 (current)
+#define kGetSponsoredMessagesLegacy -1680673735   // #9bd2f439 (pre-flags)
+// contacts.getSponsoredPeers#b6c8c393 — sponsored results in global search
+#define kGetSponsoredPeers -1228356717
+// help.getPromoData#c0977421 — promoted chat pinned into the dialogs list
+#define kGetPromoData -1063816159
 #define kSendScreenshotNotification -1589618665
 // messages.readMessageContents#36a73f77 — sent when TTL/disappearing media is
 // opened
