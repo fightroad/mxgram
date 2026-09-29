@@ -1,9 +1,0 @@
-[
-  {
-    "title": "Mx 1.1.0 is ready!",
-    "message": "• Fixed: Disable All Ads against current Telegram TL (sponsored messages, search peers, promo chat)\n• Fixed: anti-self-destruct, Custom Stars, and screenshot block\n• Fixed: fake location at null island and story ghost exceptions\n• Download boost and file-picker fix now apply as soon as you toggle them\n• Ghost Advanced Settings and Change Language follow your selected language\n• Removed the Credits section and unused disclaimer copy",
-    "type": "update",
-    "url": "https://t.me/m1ronx",
-    "target_version": "1.1.0"
-  }
-]

@@ -128,8 +128,3 @@ python3 generate_langs.py
 
 本项目 fork 自 [Aj3radi/TGExtra](https://github.com/Aj3radi/TGExtra)。
 
----
-
-<p align="center">
-  📢 Telegram 频道：<a href="https://t.me/m1ronx">t.me/m1ronx</a>
-</p>

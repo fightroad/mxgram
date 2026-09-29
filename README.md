@@ -128,8 +128,3 @@ This tweak exists for **personal and educational purposes**. Use it at your own 
 
 This project is a fork of [Aj3radi/TGExtra](https://github.com/Aj3radi/TGExtra).
 
----
-
-<p align="center">
-  📢 Telegram channel: <a href="https://t.me/m1ronx">t.me/m1ronx</a>
-</p>

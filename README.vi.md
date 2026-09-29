@@ -128,8 +128,3 @@ Tweak này chỉ dành cho **mục đích cá nhân và học tập**. Dùng th�
 
 Dự án này là bản fork của [Aj3radi/TGExtra](https://github.com/Aj3radi/TGExtra).
 
----
-
-<p align="center">
-  📢 Kênh Telegram: <a href="https://t.me/m1ronx">t.me/m1ronx</a>
-</p>

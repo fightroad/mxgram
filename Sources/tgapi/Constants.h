@@ -112,7 +112,3 @@
 // succeeds.
 #define kCustomStarsEnabled @"MxCustomStarsEnabled"
 #define kCustomStarsValue @"MxCustomStarsValue"
-
-// Announcements JSON polled by the settings header.
-#define kMxAnnouncementsURL                                                    \
-  @"https://raw.githubusercontent.com/m1ronx/mx/main/announcements.json"
