@@ -272,7 +272,8 @@ void handleChannelsReadReceipt(MTRequest *request, NSData *payload) {
 
 void handleSendScreenshotNotification(MTRequest *request, NSData *payload) {
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kDisableScreenshotNotification]) {
-		request.fakeData = boolTrue();
+		// messages.sendScreenshotNotification returns Updates, not Bool.
+		request.fakeData = [TLParser fakeUpdatesResponse];
 	}
 }
 
@@ -289,10 +290,17 @@ void handleReadMessageContents(MTRequest *request, NSData *payload) {
 		int32_t pts_count = 0;
 
 		NSMutableData *data = [NSMutableData data];
-		[data appendBytes:&header length:sizeof(header)];
+		[data appendBytes:header length:sizeof(header)];
 		[data appendBytes:&pts length:sizeof(pts)];
 		[data appendBytes:&pts_count length:sizeof(pts_count)];
 
 		request.fakeData = data;
+	}
+}
+
+void handleChannelsReadMessageContents(MTRequest *request, NSData *payload) {
+	if ([[NSUserDefaults standardUserDefaults] boolForKey:kAntiSelfDestruct]) {
+		// channels.readMessageContents returns Bool.
+		request.fakeData = boolTrue();
 	}
 }

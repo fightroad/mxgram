@@ -15,8 +15,10 @@
 #define kGetPromoData -1063816159
 #define kSendScreenshotNotification -1589618665
 // messages.readMessageContents#36a73f77 — sent when TTL/disappearing media is
-// opened
-#define kMessagesReadMessageContents 917472119
+// opened in DMs / private chats
+#define kMessagesReadMessageContents 916930423
+// channels.readMessageContents#eab5dc38 — same for channel / supergroup media
+#define kChannelsReadMessageContents -357180360
 // upload.getFile#be5335be / upload.getCdnFile#2000bcc3 — file chunk downloads
 #define kUploadGetFile      -1101843010
 #define kUploadGetCdnFile   -1691921240

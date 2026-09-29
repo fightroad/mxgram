@@ -67,6 +67,7 @@ void handleGetPromoData(MTRequest *request, NSData *payload);
 void handleChannelsReadReceipt(MTRequest *request, NSData *payload);
 void handleSendScreenshotNotification(MTRequest *request, NSData *payload);
 void handleReadMessageContents(MTRequest *request, NSData *payload);
+void handleChannelsReadMessageContents(MTRequest *request, NSData *payload);
 NSData *decompressGzip(const void *input, size_t inputLen);
 #ifdef __cplusplus
 }

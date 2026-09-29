@@ -26,7 +26,8 @@ static BOOL mxNeedsResponsePatching(void) {
   return [defaults boolForKey:kDisableForwardRestriction] ||
          [defaults boolForKey:kAntiSelfDestruct] ||
          [defaults boolForKey:kAntiEdit] ||
-         [defaults boolForKey:kAntiRevoke];
+         [defaults boolForKey:kAntiRevoke] ||
+         [defaults boolForKey:kCustomStarsEnabled];
 }
 
 #define kChannelsReadHistory -871347913
@@ -106,6 +107,9 @@ static BOOL mxNeedsResponsePatching(void) {
     break;
   case kMessagesReadMessageContents:
     handleReadMessageContents(self, payload);
+    break;
+  case kChannelsReadMessageContents:
+    handleChannelsReadMessageContents(self, payload);
     break;
   default:
     break;
