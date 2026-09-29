@@ -51,7 +51,7 @@ void read_Input_Peer(NSData *data, int *offset, int64_t *outUserId) {
 	#define InputPeerChat 900291769
 	#define InputPeerUser -571955892
 	#define InputPeerChannel 666680316
-	#define InputPeerUserFromChannel -1468331492
+	#define InputPeerUserFromMessage -1468331492
 	#define InputPeerChannelFromMessage -1121318848
 
 	if (outUserId) *outUserId = 0;
@@ -81,11 +81,14 @@ void read_Input_Peer(NSData *data, int *offset, int64_t *outUserId) {
 		case InputPeerChannel:
 		    *offset += 16;
 			return;
-		case InputPeerUserFromChannel:
-		    // The nested peer is the channel the user was seen in, not the
-		    // target — discard whatever the recursive call reported.
+		case InputPeerUserFromMessage:
+		    // inputPeerUserFromMessage#a87b0a1c peer:InputPeer msg_id:int user_id:long
 		    read_Input_Peer(data, offset, NULL);
-		    *offset += 12;
+		    *offset += 4; // msg_id
+		    if (outUserId && (NSUInteger)(*offset) + 8 <= data.length) {
+		        [data getBytes:outUserId range:NSMakeRange(*offset, 8)];
+		    }
+		    *offset += 8;
 			return;
 		case InputPeerChannelFromMessage:
 		    read_Input_Peer(data, offset, NULL);
@@ -222,13 +225,21 @@ void handleMessageReadReceipt(MTRequest *request, NSData *payload) {
 
 void handleStoriesReadReceipt(MTRequest *request, NSData *payload) {
 	if (![[NSUserDefaults standardUserDefaults] boolForKey:kGhostModeEnabled]) return;
+
+	// stories.readStories#a556dac8 peer:InputPeer max_id:int
+	int offset = 4; // skip constructor id
+	int64_t peerUserId = 0;
+	read_Input_Peer(payload, &offset, &peerUserId);
+	mxDiag("readStories peer=%lld", peerUserId);
+	if (isGhostException(peerUserId)) return;
+
 	if ([[NSUserDefaults standardUserDefaults] boolForKey:kDisableStoriesReadReceipt]) {
 		
 		uint8_t vectorID[] = {0x15, 0xC4, 0xB5, 0x1C}; // vector#1cb5c415
 		int32_t count = 0;  
 		
 		NSMutableData *data = [NSMutableData data];
-		[data appendBytes:&vectorID length:sizeof(vectorID)];
+		[data appendBytes:vectorID length:sizeof(vectorID)];
 		[data appendBytes:&count length:sizeof(count)];
 	
 		request.fakeData = data;

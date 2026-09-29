@@ -89,13 +89,12 @@
 }
 
 - (void)loadDefaultLocation {
-  CGFloat savedLongitude =
-      [[NSUserDefaults standardUserDefaults] floatForKey:FAKE_LONGITUDE_KEY];
-  CGFloat savedLatitude =
-      [[NSUserDefaults standardUserDefaults] floatForKey:FAKE_LATITUDE_KEY];
-
+  NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
   CLLocationCoordinate2D centerCoordinate;
-  if (savedLongitude && savedLatitude) {
+  if ([defaults objectForKey:FAKE_LONGITUDE_KEY] &&
+      [defaults objectForKey:FAKE_LATITUDE_KEY]) {
+    CGFloat savedLongitude = [defaults floatForKey:FAKE_LONGITUDE_KEY];
+    CGFloat savedLatitude = [defaults floatForKey:FAKE_LATITUDE_KEY];
     centerCoordinate =
         CLLocationCoordinate2DMake(savedLatitude, savedLongitude);
     // Add a pin for the saved location

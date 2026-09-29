@@ -188,8 +188,8 @@ static BOOL mxNeedsResponsePatching(void) {
 // dummy value (0x00000001) so Telegram discards the entire update.
 // Zeroing IDs is unreliable — killing the constructor is definitive.
 //
-// updateDeleteMessages       constructor: -1576161051 (0xA20DB722)
-// updateDeleteChannelMessages constructor: -1020437742 (0xC37521C9)
+// updateDeleteMessages       constructor: -1576161051 (0xA20DB0E5)
+// updateDeleteChannelMessages constructor: -1020437742 (0xC32D5B12)
 // ============================================================
 
 #define kUpdateDeleteMessages -1576161051
@@ -197,10 +197,6 @@ static BOOL mxNeedsResponsePatching(void) {
 
 #define kUpdateEditMessage -469536605
 #define kUpdateEditChannelMessage 457133559
-
-#define kMessageConstructor -356721331
-#define kChatConstructor 1103884886
-#define kChannelConstructor 1954681982
 
 #define kVectorConstructor 481674261
 

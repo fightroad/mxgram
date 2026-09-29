@@ -8,6 +8,13 @@ bool shouldFakeLocation() {
 	return [defaults boolForKey:FAKE_LOCATION_ENABLED_KEY];
 }
 
+// floatForKey returns 0 for missing keys, so 0° / 0° (null island) looked
+// "unset". objectForKey distinguishes a written coordinate from absence.
+static BOOL mxHasSavedFakeCoords(NSUserDefaults *defaults) {
+	return [defaults objectForKey:FAKE_LONGITUDE_KEY] != nil
+	    && [defaults objectForKey:FAKE_LATITUDE_KEY] != nil;
+}
+
 @interface MxFakeLocationManager : NSObject
 @property (nonatomic, strong) NSHashTable<CLLocationManager *> *locationManagers;
 @property (nonatomic, strong) NSTimer *lieToDelegateTimer;
@@ -61,12 +68,11 @@ bool shouldFakeLocation() {
 	if (!shouldFakeLocation()) return;
 		
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	CGFloat savedLongitude = [defaults floatForKey:FAKE_LONGITUDE_KEY];
-	CGFloat savedLatitude = [defaults floatForKey:FAKE_LATITUDE_KEY];
-	
-	if (!savedLongitude || !savedLatitude) {
+	if (!mxHasSavedFakeCoords(defaults)) {
 		return;
 	}
+	CGFloat savedLongitude = [defaults floatForKey:FAKE_LONGITUDE_KEY];
+	CGFloat savedLatitude = [defaults floatForKey:FAKE_LATITUDE_KEY];
 	
 	CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:savedLatitude longitude:savedLongitude];
 	NSArray *fakeLocations = @[fakeLocation];
@@ -100,17 +106,13 @@ bool shouldFakeLocation() {
 
 - (void)locationManager:(id)manager  didUpdateLocations:(id)locations {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (shouldFakeLocation()) {
-		
+	if (shouldFakeLocation() && mxHasSavedFakeCoords(defaults)) {
 		CGFloat savedLongitude = [defaults floatForKey:FAKE_LONGITUDE_KEY];
         CGFloat savedLatitude = [defaults floatForKey:FAKE_LATITUDE_KEY];
-        
-		if (savedLongitude && savedLatitude) {
-            CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:savedLatitude longitude:savedLongitude];
-            NSArray *fakeLocations = @[fakeLocation];
-			%orig(manager, fakeLocations);
-            return;
-        }
+        CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:savedLatitude longitude:savedLongitude];
+        NSArray *fakeLocations = @[fakeLocation];
+		%orig(manager, fakeLocations);
+        return;
 	}
 	%orig;
 }
@@ -121,18 +123,13 @@ bool shouldFakeLocation() {
 
 - (void)locationManager:(id)manager  didUpdateLocations:(id)locations {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if (shouldFakeLocation()) {
-		
-		// Get Our Saved Location
+	if (shouldFakeLocation() && mxHasSavedFakeCoords(defaults)) {
 		CGFloat savedLongitude = [defaults floatForKey:FAKE_LONGITUDE_KEY];
         CGFloat savedLatitude = [defaults floatForKey:FAKE_LATITUDE_KEY];
-        
-		if (savedLongitude && savedLatitude) {
-            CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:savedLatitude longitude:savedLongitude];
-            NSArray *fakeLocations = @[fakeLocation];
-			%orig(manager, fakeLocations);
-            return;
-        }
+        CLLocation *fakeLocation = [[CLLocation alloc] initWithLatitude:savedLatitude longitude:savedLongitude];
+        NSArray *fakeLocations = @[fakeLocation];
+		%orig(manager, fakeLocations);
+        return;
 	}
 	%orig;
 }

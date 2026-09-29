@@ -998,9 +998,16 @@ static NSString *const kMxTweakVersion = @"1.0.0";
       cell.imageView.tintColor = [self dynamicColorBW];
       cell.textLabel.text = TGLoc(@"SELECT_FAKE_LOCATION_TITLE");
       NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-      CGFloat savedLongitude = [defaults floatForKey:FAKE_LONGITUDE_KEY];
-      CGFloat savedLatitude = [defaults floatForKey:FAKE_LATITUDE_KEY];
-      cell.detailTextLabel.text = [NSString stringWithFormat:@"lon :%f\nlat :%f", savedLongitude ?: 0, savedLatitude ?: 0];
+      if ([defaults objectForKey:FAKE_LONGITUDE_KEY] &&
+          [defaults objectForKey:FAKE_LATITUDE_KEY]) {
+        CGFloat savedLongitude = [defaults floatForKey:FAKE_LONGITUDE_KEY];
+        CGFloat savedLatitude = [defaults floatForKey:FAKE_LATITUDE_KEY];
+        cell.detailTextLabel.text =
+            [NSString stringWithFormat:@"lon :%f\nlat :%f", savedLongitude,
+                                       savedLatitude];
+      } else {
+        cell.detailTextLabel.text = nil;
+      }
     }
     cell.detailTextLabel.numberOfLines = 0;
     return cell;
