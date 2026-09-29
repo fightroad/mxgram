@@ -1620,17 +1620,11 @@ static void hook() {
             showWelcomeAlertIfNeeded();
         });
 
-        // Download Speed Boost — find FetchImpl.Impl via runtime class scan.
-        // The class name contains "FetchImpl" and "Impl" and lives in TelegramCore.
-        // We swizzle the init method to intercept defaultPartSize and maxPendingParts.
-        //
-        // Skipped entirely when the feature is off. The scan walks every class
-        // registered in the process — tens of thousands in this app — and used
-        // to run on every launch whether or not anything came of it.
-        if ([[NSUserDefaults standardUserDefaults] integerForKey:kDownloadSpeedBoost] > 0) {
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [MxDownloadBoost install];
-            });
-        }
+        // Download Speed Boost — always install the swizzle; boostedFetchingStateInit
+        // reads kDownloadSpeedBoost at call time, so toggling Mid-session takes
+        // effect without a relaunch. install itself is once-only.
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [MxDownloadBoost install];
+        });
     });
  }

@@ -175,7 +175,8 @@ void handleSetTyping(MTRequest *request, NSData *payload) {
 		  shouldBlockAction = [defaults boolForKey:kDisableSpeakingInGroupCallStatus];
 		  break;
 		case kActionIDReserverHistoryImport:
-		  shouldBlockAction = [defaults boolForKey:@"reserverHistroyImport"];
+		  // No dedicated UI toggle; hide with Ghost Mode (already gated above).
+		  shouldBlockAction = YES;
 		  break;
 		case kActionIDChoosingSticker:
 		  shouldBlockAction = [defaults boolForKey:kDisableChoosingStickerStatus];

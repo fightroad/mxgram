@@ -118,13 +118,10 @@ bool shouldFixFilePicker() {
 
 __attribute__((constructor))
 static void initFileHooks() {
-	// Nothing to install when the fix is off, and the scan below walks every
-	// class in the process — tens of thousands of them, holding the runtime
-	// lock the main thread is also using while it loads classes during launch.
-	if (![[NSUserDefaults standardUserDefaults] boolForKey:FILE_PICKER_FIX_KEY]) {
-		return;
-	}
-
+	// Always install the hooks. Each hooked method bails out via
+	// shouldFixFilePicker() when the toggle is off, so enabling Mid-session
+	// works without a relaunch. Skipping %init based on the launch-time
+	// preference left the feature dead until restart.
 	dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.4 * NSEC_PER_SEC)), dispatch_get_global_queue(QOS_CLASS_USER_INITIATED, 0),	^{
 
 		int numClasses = objc_getClassList(NULL, 0);

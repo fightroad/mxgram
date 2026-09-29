@@ -55,60 +55,63 @@ static id boostedFetchingStateInit(id self, SEL _cmd,
 @implementation MxDownloadBoost
 
 + (void)install {
-    // Scan all ObjC classes for FetchingState (private nested class in TelegramCore)
-    int classCount = objc_getClassList(NULL, 0);
-    if (classCount <= 0) return;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        // Scan all ObjC classes for FetchingState (private nested class in TelegramCore)
+        int classCount = objc_getClassList(NULL, 0);
+        if (classCount <= 0) return;
 
-    Class *classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * classCount);
-    classCount = objc_getClassList(classes, classCount);
+        Class *classes = (__unsafe_unretained Class *)malloc(sizeof(Class) * classCount);
+        classCount = objc_getClassList(classes, classCount);
 
-    Class target = nil;
-    for (int i = 0; i < classCount; i++) {
-        const char *name = class_getName(classes[i]);
-        if (!name) continue;
-        // Looking for something like _TtCCC12TelegramCore9FetchImpl12FetchingState
-        // or _TtCC12TelegramCore9FetchImpl12FetchingState
-        if (strstr(name, "TelegramCore") &&
-            strstr(name, "FetchImpl") &&
-            strstr(name, "FetchingState")) {
-            target = classes[i];
-            customLog2(@"[Mx] Found FetchingState class: %s", name);
-            break;
-        }
-    }
-    free(classes);
-
-    if (!target) {
-        customLog2(@"[Mx] FetchingState class not found — boost unavailable");
-        return;
-    }
-
-    // Find the init method — it has 8 parameters after self/cmd
-    // Selector: initWithFetchLocation:partSize:minPartSize:maxPartSize:partAlignment:partDivision:maxPendingParts:decryptionState:
-    SEL initSel = @selector(initWithFetchLocation:partSize:minPartSize:maxPartSize:partAlignment:partDivision:maxPendingParts:decryptionState:);
-    Method m = class_getInstanceMethod(target, initSel);
-    if (!m) {
-        // Try finding any init method with the right number of args
-        unsigned int methodCount = 0;
-        Method *methods = class_copyMethodList(target, &methodCount);
-        for (unsigned int j = 0; j < methodCount; j++) {
-            if (method_getNumberOfArguments(methods[j]) == 10) { // self + cmd + 8 params
-                m = methods[j];
-                customLog2(@"[Mx] Found init by arg count: %s", sel_getName(method_getName(m)));
+        Class target = nil;
+        for (int i = 0; i < classCount; i++) {
+            const char *name = class_getName(classes[i]);
+            if (!name) continue;
+            // Looking for something like _TtCCC12TelegramCore9FetchImpl12FetchingState
+            // or _TtCC12TelegramCore9FetchImpl12FetchingState
+            if (strstr(name, "TelegramCore") &&
+                strstr(name, "FetchImpl") &&
+                strstr(name, "FetchingState")) {
+                target = classes[i];
+                customLog2(@"[Mx] Found FetchingState class: %s", name);
                 break;
             }
         }
-        free(methods);
-    }
+        free(classes);
 
-    if (!m) {
-        customLog2(@"[Mx] FetchingState init not found");
-        return;
-    }
+        if (!target) {
+            customLog2(@"[Mx] FetchingState class not found — boost unavailable");
+            return;
+        }
 
-    originalFetchingStateInit = (FetchingStateInitIMP)method_getImplementation(m);
-    method_setImplementation(m, (IMP)boostedFetchingStateInit);
-    customLog2(@"[Mx] Download boost installed on %s", class_getName(target));
+        // Find the init method — it has 8 parameters after self/cmd
+        // Selector: initWithFetchLocation:partSize:minPartSize:maxPartSize:partAlignment:partDivision:maxPendingParts:decryptionState:
+        SEL initSel = @selector(initWithFetchLocation:partSize:minPartSize:maxPartSize:partAlignment:partDivision:maxPendingParts:decryptionState:);
+        Method m = class_getInstanceMethod(target, initSel);
+        if (!m) {
+            // Try finding any init method with the right number of args
+            unsigned int methodCount = 0;
+            Method *methods = class_copyMethodList(target, &methodCount);
+            for (unsigned int j = 0; j < methodCount; j++) {
+                if (method_getNumberOfArguments(methods[j]) == 10) { // self + cmd + 8 params
+                    m = methods[j];
+                    customLog2(@"[Mx] Found init by arg count: %s", sel_getName(method_getName(m)));
+                    break;
+                }
+            }
+            free(methods);
+        }
+
+        if (!m) {
+            customLog2(@"[Mx] FetchingState init not found");
+            return;
+        }
+
+        originalFetchingStateInit = (FetchingStateInitIMP)method_getImplementation(m);
+        method_setImplementation(m, (IMP)boostedFetchingStateInit);
+        customLog2(@"[Mx] Download boost installed on %s", class_getName(target));
+    });
 }
 
 @end

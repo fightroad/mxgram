@@ -19,9 +19,9 @@
 #define kMessagesReadMessageContents 916930423
 // channels.readMessageContents#eab5dc38 — same for channel / supergroup media
 #define kChannelsReadMessageContents -357180360
-// upload.getFile#be5335be / upload.getCdnFile#2000bcc3 — file chunk downloads
+// upload.getFile#be5335be / upload.getCdnFile#395f69da — file chunk downloads
 #define kUploadGetFile      -1101843010
-#define kUploadGetCdnFile   -1691921240
+#define kUploadGetCdnFile    962554330
 
 // Outgoing media sends, rewritten by Video to Voice
 #define kMessagesSendMedia 53536639
